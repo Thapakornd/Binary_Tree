@@ -156,6 +156,24 @@ def find_leav(bst):
     temp.clear()
 # -----------------------------------------
        
+# Find Sibling of BT -------------------------------
+def val_sib(bst):
+    if bst == "":
+        return 
+    if bst.left != "" and bst.right != "":
+        temp.append([bst.left.val,bst.right.val])
+    left_h = val_sib(bst.left)
+    height_h = val_sib(bst.right)
+    return
+def find_sib(bst):
+    val_sib(bst)
+    val = len(temp)
+    print(f"\n\nTotal Sibling : {val}\nSibling : ",end="")
+    for i in temp:
+        print(i,end=" ")
+    temp.clear()
+# --------------------------------------------------
+
 # Temp to keep value to monitor
 temp = []
 
@@ -177,6 +195,9 @@ head.apped(85)
 head.apped(100)
 
 # Ex-2.2 Remove value in binary tree
+head.delete(30)
+head.delete(75)
+head.delete(35)
 
 # Ex-2.3 Theory part (coding is need)
 # Find maximum height
@@ -192,3 +213,4 @@ child(head)
 find_leav(head)
 
 # Find sibling
+find_sib(head)
