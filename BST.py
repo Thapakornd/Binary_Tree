@@ -174,6 +174,29 @@ def find_sib(bst):
     temp.clear()
 # --------------------------------------------------
 
+# Function Balanc node -------------------------------
+
+def val_sort(bst):
+    if bst == "":
+        return
+    if bst.val != "":
+        temp.append(bst.val)
+    left_h = val_sort(bst.left)
+    right_h = val_sort(bst.right)
+    return
+def balance(bst):
+    val_sort(bst)
+    bst.left = ""
+    bst.right = ""
+    temp.pop(0)
+    temp.sort()
+    for i in temp:
+        bst.apped(i)
+    print("\n\nSuccess!")
+    temp.clear()
+
+#-----------------------------------------------------
+
 # Temp to keep value to monitor
 temp = []
 
@@ -214,3 +237,6 @@ find_leav(head)
 
 # Find sibling
 find_sib(head)
+
+# Balance node
+balance(head)
