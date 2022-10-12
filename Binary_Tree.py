@@ -1,4 +1,3 @@
-
 # Python Binary Tree
 # Class Structure Node
 class Node:
@@ -19,6 +18,9 @@ class TreeNode:
 			head.left = self.insert(head.left,val)
 		else:
 			head.right = self.insert(head.right,val)
+
+		# Update Height each node
+		head.height = 1 + max(self.get_height(head.left),self.get_height(head.right))
 		return head
 
 	# Delete Node
@@ -113,11 +115,10 @@ class TreeNode:
 		return self.pre_order(head.left) + self.pre_order(head.right)
 
 	# Update Height Tree Node
-	def get_height_all(self,head):
-			if head == None:
-				return 0
-			head.height = 1 + max(self.get_height_all(head.left),self.get_height_all(head.right))
-			return head.height
+	def get_height(self,head):
+		if head == None:
+			return 0
+		return head.height
 
 	# All Balance Node Function
 	def balance(self,head):
@@ -130,8 +131,8 @@ class TreeNode:
 			temp.left = head
 
 			# Update Height
-			head.height = 1 + max(get_height(head.left),get_height(head.right))
-			temp.height = 1 + max(get_height(temp.left),get_height(head.right))
+			head.height = 1 + max(self.get_height(head.left),self.get_height(head.right))
+			temp.height = 1 + max(self.get_height(temp.left),self.get_height(head.right))
 			return temp
 
 		def right_rotate(head):  # Right Rotate
@@ -142,14 +143,9 @@ class TreeNode:
 			temp.right = head
 
 			# Update Height
-			head.height = 1 + max(get_height(head.left),get_height(head.right))
-			temp.height = 1 + max(get_height(temp.left),get_height(head.right))
+			head.height = 1 + max(self.get_height(head.left),self.get_height(head.right))
+			temp.height = 1 + max(self.get_height(temp.left),self.get_height(head.right))
 			return temp
-
-		def get_height(head):  # Get Height each node
-			if head == None:
-				return 0
-			return head.height
 
 		# Function Balance Tree
 		def balance_tree(head):
@@ -157,14 +153,14 @@ class TreeNode:
 				return None
 			head.left = balance_tree(head.left)  # <-- Travel with preorder
 			head.right = balance_tree(head.right)
-			balance_val = get_height(head.left) - get_height(head.right)
+			balance_val = self.get_height(head.left) - self.get_height(head.right)
 	
 			while balance_val < -1 or balance_val > 1: # <-- Check balance currently
 				if balance_val < -1:
 					head = left_rotate(head)
 				if balance_val > 1:
 					head = right_rotate(head)
-				balance_val = get_height(head.left) - get_height(head.right)
+				balance_val = self.get_height(head.left) - self.get_height(head.right)
 			return head  # Return New Head
 		
 		# Function Check No need to balance
@@ -173,21 +169,17 @@ class TreeNode:
 				return 0
 			get_left = loop_return(head.left)
 			get_right = loop_return(head.right)
-			check_bal = get_height(head.left) - get_height(head.right)
+			check_bal = self.get_height(head.left) - self.get_height(head.right)
 			b = 0
 			if check_bal < -1 or check_bal > 1:
 				b = 1
 			return b + get_left + get_right
-
-		# Init Height each node
-		head.height = self.get_height_all(head)
 		
 		# Find balance node
 		bal_loop = 1
 		while bal_loop:
 			head = balance_tree(head)
 			bal_loop = loop_return(head)  # Check stop balancing
-
 		return head
 		
 # init Treenode
@@ -199,13 +191,17 @@ list_ap = [50,25,75,30,60,40,35,70,90,15,45,27,55,85,100]
 for node in list_ap:
 	head = func_tree.insert(head, node)
 
+head_2 = None
+list_ap_2 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+for node in list_ap_2:
+    head_2 = func_tree.insert(head_2, node)
+
 # Delete
 head = func_tree.delete(head, 30)
 head = func_tree.delete(head, 75)
 head = func_tree.delete(head, 35)
 
 # Maximum Height
-func_tree.get_height_all(head)
 print(f'Maximum Height : {head.height}')
 
 # Parent
@@ -225,7 +221,7 @@ func_tree.sibling(head)
 print(f"Sibing {len(func_tree.sib_node)} : {func_tree.sib_node}")
 
 # Balance node
-# head = func_tree.balance(head)
+head_2 = func_tree.balance(head_2)
 
 print("Preorder Travel")
-func_tree.pre_order(head)
+func_tree.pre_order(head_2)
