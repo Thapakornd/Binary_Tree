@@ -46,7 +46,7 @@ class TreeNode:
 				while temp_right.left.left != None:  # <-- Move Left until left.left == None
 					temp_right = temp_right.left  
 				if temp_right.left.right != None: # <-- If temp_right.left has child assign : temp_swap
-					temp_swap = temp.left.right
+					temp_swap = temp_right.left.right
 				temp_replace = temp_right.left  # <-- Assign : temp_replace -> temp_right.left 
 				temp_replace.left = temp.left    # \ 
 				temp_replace.right = temp.right  # | <-- Swap Replace to Delte Val address
